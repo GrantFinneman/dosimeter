@@ -51,3 +51,19 @@ def reshape_extend(edep_array):
                            axis=2) # Axis to extend along (begin at 0) axes(0, 1, 2)
     
     return long_array
+
+def calculate_sizes(energy_array):
+    '''
+    Function that creates an array with linewidth values for plotting. The largest linewidth should be about 5 otherwise they get too big. 
+    
+    Params
+    ------
+    energy_array : ndarray This array should be the same array used for the marker color. That way the have the same total amount of elements and the same order.
+    
+    '''
+    
+    max_value = energy_array.max()
+    
+    size_array = energy_array/max_value * 100
+    
+    return size_array
