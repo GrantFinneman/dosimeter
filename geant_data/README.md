@@ -1,3 +1,24 @@
 # Naming of generated files
 
-The name of each file totEDBars_#_#.txt signifies the shape of the beam hitting the detector. The beam is a rectangle centered on the detector with a length and width defined by the first and second numbers respectively
+## *NOTE*
+- The directory that is going to be used is dosimeterDataMM_completed_11_11_2019
+
+## Geant Bars
+The name of each file totEDBars\_#\_#.txt signifies the shape of the beam hitting the detector. The beam is a rectangle centered on the detector with a length and width defined by the first and second numbers respectively
+
+## Geant Cubes
+Same naming scheme as the bars, The beam follows the same order as the bars.
+
+- Example of totEDCubes:
+
+`0 0 0 2.49451
+1 0 0 3.13366
+2 0 0 0.818008
+3 0 0 1.78182
+4 0 0 0.0120127
+5 0 0 1.19679`
+
+- Col1: CubeID in dimension x
+- Col2: CubeID in dimension y
+- Col3: cubeID in dimension z
+- Col4: Energy Deposition in the specific cube
