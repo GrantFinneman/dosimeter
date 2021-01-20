@@ -1,5 +1,8 @@
 import numpy as np
+import os
+import pandas as pd
 
+#=========================================================================
 def create_3d_cords():
     '''
     This creates a set of coordinate pairs along the 3D 8x8x8 grid
@@ -18,7 +21,7 @@ def create_3d_cords():
     
     return x_cords, y_cords, z_cords
 
-
+#=========================================================================
 
 def reshape_extend(edep_array):
     '''
@@ -46,14 +49,13 @@ def reshape_extend(edep_array):
     ax.set_xlabel('x axis')
     '''
     
-    if len(edep_array) != 64: raise 'Input array not 64 and can not be reshaped to 8x8'
     square_array = edep_array.reshape(8, 8)
     long_array = np.repeat(square_array[:, :, np.newaxis],  # The array I want to extend by copying along an axis
                            repeats=8, # How many times I want to repeat the square
                            axis=2) # Axis to extend along (begin at 0) axes(0, 1, 2)
     return long_array
 
-
+#=========================================================================
 
 def calculate_sizes(energy_array):
     '''
@@ -72,14 +74,17 @@ def calculate_sizes(energy_array):
     
     return size_array
 
+#=========================================================================
 
 def bar_chart_helper(bar_heights):
     '''
-    Helper function to build all of the accessory stuff when if comes to makeing 3d bar charts
+    Helper function to build all of the accessory stuff when if comes to makeing 3d bar charts.
+    Rotates the data so that channel 1 is at the top left and channel 8 at the top right.
     
     Params
     ------
-    bar_heights : ndarray This array is the data you want plotted with the height. It ensures it is able to be wrapped into 8x8
+    bar_heights : ndarray of dim(1, 64) This array is the data you want plotted with the height. 
+    It ensures it is able to be wrapped into 8x8
     
     Returns
     ------
@@ -123,7 +128,8 @@ def bar_chart_helper(bar_heights):
     ax2.set_title('Not Shaded')
 
     plt.show()
-    '''    
+    '''
+    
     _x, _y = np.arange(8), np.arange(8)
     _xx, _yy = np.meshgrid(_x, _y) # meshgrid creates a grid of coordinates with the desired x and y dimensions
     x, y = _xx.ravel(), _yy.ravel() # ravel just flattens the ndim array into 1dim
@@ -131,4 +137,36 @@ def bar_chart_helper(bar_heights):
     z = np.zeros_like(bar_heights)
     width = depth = 1
     
-    return x, y, z, width, depth, bar_heights
+    rotated_data = np.rot90(bar_heights.reshape((8, 8)), axes=(0, 1)) # This rotates the data by 90 degrees so that channel 1 is in the top left corner and channel 8 in the top right.
+    return x, y, z, width, depth, rotated_data.flatten()
+
+#=========================================================================
+
+def load_data_ohio(ohio_extraction_dir='ohio_data/extracted_data/'):
+    '''
+    A convenience function that will create a dictionary containing the energy deposition of each run.
+    
+    Params
+    ------
+    ohio_extraction_dir : [str] The path to the ohio_data extraction directory
+    
+    Return
+    ------
+    energy_dict : [dictionary]
+        key : [str filename] The name of the file holding the data
+        value : [ndarray] dim(1, 64) Energy deposited in each pixel
+    '''
+    
+    extracted_dir = ohio_extraction_dir
+    
+    # Creates a list of file paths of only txt files and not run 22
+    files = sorted([os.path.join(extracted_dir, file) for file in os.listdir(extracted_dir) 
+                    if all((file.endswith('txt'), '22' not in file))])
+
+    energy_dict = {}
+    for file in files:
+        df = pd.read_csv(file, delim_whitespace=True)
+        file_name = os.path.basename(file)
+        data_array = np.array(df['edep'])
+        energy_dict[file_name] = data_array
+    return energy_dict
