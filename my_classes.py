@@ -142,7 +142,7 @@ def bar_chart_helper(bar_heights):
 
 #=========================================================================
 
-def load_data_ohio(ohio_extraction_dir='ohio_data/extracted_data/'):
+def load_data_ohio(ohio_extraction_dir='/home/gmf/Projects/dosimeter/ohio_data/extracted_data/'):
     '''
     A convenience function that will create a dictionary containing the energy deposition of each run.
     
@@ -166,6 +166,37 @@ def load_data_ohio(ohio_extraction_dir='ohio_data/extracted_data/'):
     energy_dict = {}
     for file in files:
         df = pd.read_csv(file, delim_whitespace=True, header=2)
+        file_name = os.path.basename(file)
+        data_array = np.array(df['edep'])
+        energy_dict[file_name] = data_array
+    return energy_dict
+
+#=========================================================================
+
+def load_data_geant(geant_extraction_dir):
+    '''
+    A convenience function that will create a dictionary containing the energy deposition of each run.
+    
+    Params
+    ------
+    geant_extraction_dir : [str] The path to the ohio_data extraction directory
+    
+    Return
+    ------
+    energy_dict : [dictionary]
+        key : [str filename] The name of the file holding the data
+        value : [ndarray] dim(1, 64) Energy deposited in each pixel
+    '''
+    
+    extracted_dir = geant_extraction_dir
+    
+    # Creates a list of file paths of only txt files and not run 22
+    files = sorted([os.path.join(extracted_dir, file) for file in os.listdir(extracted_dir) 
+                    if all((file.endswith('txt'), '22' not in file))])
+
+    energy_dict = {}
+    for file in files:
+        df = pd.read_csv(file, delim_whitespace=True, header=0)
         file_name = os.path.basename(file)
         data_array = np.array(df['edep'])
         energy_dict[file_name] = data_array

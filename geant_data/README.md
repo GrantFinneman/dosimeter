@@ -4,7 +4,8 @@
 - The directory that is going to be used is dosimeterDataMM_completed_11_11_2019
 
 ## Geant Bars
-The name of each file totEDBars\_#\_#.txt signifies the shape of the beam hitting the detector. The beam is a rectangle centered on the detector with a length and width defined by the first and second numbers respectively
+The name of each file totEDBars\_#\_#.txt signifies the shape of the beam hitting the detector. The beam is a rectangle centered on the detector with a length and width defined by the first and second numbers respectively. The second number gives the thickness of the beam which is shows up as more pixels being activated on the detector. It gets wider
+![title](../supplimentary_material/proof_of_geant_beam_width.png)
 
 ## Geant Cubes
 Same naming scheme as the bars, The beam follows the same order as the bars.
