@@ -1,3 +1,5 @@
+This file was gnenerated on 2021-01-24 13:50:51.054822 by Grant Finneman. This contains the data colleted by
+Alex in Ohio. The only processing that has been done so far is summing the edep of each channel.
 Channel edep
 Ch.1  50813.50932
 Ch.2  52572.74400

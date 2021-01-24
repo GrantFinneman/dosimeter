@@ -165,7 +165,7 @@ def load_data_ohio(ohio_extraction_dir='ohio_data/extracted_data/'):
 
     energy_dict = {}
     for file in files:
-        df = pd.read_csv(file, delim_whitespace=True)
+        df = pd.read_csv(file, delim_whitespace=True, header=2)
         file_name = os.path.basename(file)
         data_array = np.array(df['edep'])
         energy_dict[file_name] = data_array
