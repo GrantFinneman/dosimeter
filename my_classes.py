@@ -131,13 +131,13 @@ def bar_chart_helper(bar_heights):
     '''
     
     _x, _y = np.arange(8), np.arange(8)
-    _xx, _yy = np.meshgrid(_x, _y) # meshgrid creates a grid of coordinates with the desired x and y dimensions
+    _xx, _yy = np.meshgrid(_x, _y, indexing='ij') # meshgrid creates a grid of coordinates with the desired x and y dimensions
     x, y = _xx.ravel(), _yy.ravel() # ravel just flattens the ndim array into 1dim
     
     z = np.zeros_like(bar_heights)
     width = depth = 1
     
-    rotated_data = np.rot90(bar_heights.reshape((8, 8)), axes=(0, 1)) # This rotates the data by 90 degrees so that channel 1 is in the top left corner and channel 8 in the top right.
+    rotated_data = bar_heights
     return x, y, z, width, depth, rotated_data.flatten()
 
 #=========================================================================
@@ -170,3 +170,24 @@ def load_data_ohio(ohio_extraction_dir='ohio_data/extracted_data/'):
         data_array = np.array(df['edep'])
         energy_dict[file_name] = data_array
     return energy_dict
+
+#=========================================================================
+
+def bar_chart_helper_rot(bar_heights):
+    '''
+    This function does the same thing as the normal bar_chart_helper but will plot bars horizontally
+    by changing x, y, z, dx, dy, dz
+    
+    the dy is contains the length of the bars
+    
+    they start at different y and z but all the same x
+    '''
+    _y, _z = np.arange(8), np.flip(np.arange(8))
+    _yy, _zz = np.meshgrid(_y, _z, indexing='xy') # This took a little while for me to understand why this works but buy default, the grid will do all of the y then z as if it were moving up a level, I want it to move z then down a y
+    y, z = _yy.ravel(), _zz.ravel() # ravel just flattens the ndim array into 1dim
+
+    x = np.zeros_like(y)
+    dy = dz = 1
+
+    rotated_data = bar_heights #np.rot90(bar_heights.reshape((8, 8)), axes=(0, 1)).flatten() # This rotates the data by 90 degrees so that channel 1 is in the top left corner and channel 8 in the top right.
+    return x, y, z, rotated_data, dy, dz
