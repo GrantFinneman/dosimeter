@@ -1,0 +1,358 @@
+
+#=====================================================
+# VERBOSITY
+#=====================================================
+
+/control/execute mac/verbose.mac
+
+#=====================================================
+# VISUALISATION
+#=====================================================
+
+#/control/execute mac/visu.mac
+
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+# World
+/gate/geometry/setMaterialDatabase						data/GateMaterials.db
+/gate/world/setMaterial									Air
+/gate/world/geometry/setXLength							800 mm
+/gate/world/geometry/setYLength							800 mm
+/gate/world/geometry/setZLength    						800 mm
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Scanner
+/gate/world/daughters/name								CTscanner
+/gate/world/daughters/insert            				box
+/gate/CTscanner/geometry/setZLength						420 mm
+/gate/CTscanner/geometry/setYLength						420 mm
+/gate/CTscanner/geometry/setXLength       				50 mm
+/gate/CTscanner/placement/setTranslation  				-250 0 0 mm
+/gate/CTscanner/setMaterial               				Air
+/gate/CTscanner/vis/setVisible            				1
+/gate/CTscanner/vis/setColor              				white
+
+#------------
+
+# Module contains clusters
+/gate/CTscanner/daughters/name							module
+/gate/CTscanner/daughters/insert            			box
+/gate/module/geometry/setZLength						420 mm
+/gate/module/geometry/setYLength       					420 mm
+/gate/module/geometry/setXLength       					50 mm
+#/gate/module/placement/setTranslation					-540 0 0 mm
+/gate/module/setMaterial               					Air
+/gate/module/vis/setVisible            					1
+/gate/module/vis/setColor              					blue
+
+#------------
+
+# Cluster contains pixels
+/gate/module/daughters/name								cluster
+/gate/module/daughters/insert            				box
+/gate/cluster/geometry/setZLength       				420 mm
+/gate/cluster/geometry/setYLength       				420 mm
+/gate/cluster/geometry/setXLength       				50 mm
+#/gate/cluster/placement/setTranslation  				-540 0 0 mm
+/gate/cluster/setMaterial               				Air
+/gate/cluster/vis/setVisible            				1
+/gate/cluster/vis/setColor              				green
+
+# ----------------------------PIXEL-----------------------------------------
+
+# Pixels are the sensitive portion of the detector
+/gate/cluster/daughters/name							pixel
+/gate/cluster/daughters/insert							box
+/gate/pixel/geometry/setXLength							50 mm
+/gate/pixel/geometry/setYLength 						15 mm
+/gate/pixel/geometry/setZLength 						15 mm
+#/gate/pixel/setMaterial 			    				Air
+/gate/pixel/setMaterial 			    				hd_scint_glass_Eu
+/gate/pixel/vis/setColor 			    				red
+
+
+# REPEAT PIXEl_0
+/gate/pixel/repeaters/insert							cubicArray
+/gate/pixel/cubicArray/setRepeatNumberX 				1
+/gate/pixel/cubicArray/setRepeatNumberY 				28
+/gate/pixel/cubicArray/setRepeatNumberZ   				28
+/gate/pixel/cubicArray/setRepeatVector 	    			0.0 15 15 mm
+/gate/pixel/cubicArray/autoCenter 		    			true
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Box FOV
+/gate/world/daughters/name								FOV
+/gate/world/daughters/insert         					box
+/gate/FOV/geometry/setXLength        					75 mm
+/gate/FOV/geometry/setYLength        					75 mm
+/gate/FOV/geometry/setZLength        					200 mm
+/gate/FOV/setMaterial                					Air
+/gate/FOV/vis/setVisible             					1
+/gate/FOV/vis/setColor               					green
+
+# ----------------------------KILL BOXES-----------------------------------------
+
+/gate/world/daughters/name								top_killbox
+/gate/world/daughters/insert							box
+/gate/top_killbox/geometry/setXLength					600 mm
+/gate/top_killbox/geometry/setYLength					1 mm
+/gate/top_killbox/geometry/setZLength					500 mm
+/gate/top_killbox/setMaterial							Air
+/gate/top_killbox/placement/setTranslation  			0 220 0 mm
+/gate/top_killbox/vis/setVisible						1
+/gate/top_killbox/vis/setColor							white
+
+/gate/actor/addActor KillActor							killer_1
+/gate/actor/killer_1/save                               ./killed
+/gate/actor/killer_1/attachTo							top_killbox
+
+#------------
+
+/gate/world/daughters/name								bottom_killbox
+/gate/world/daughters/insert							box
+/gate/bottom_killbox/geometry/setXLength				600 mm
+/gate/bottom_killbox/geometry/setYLength				1 mm
+/gate/bottom_killbox/geometry/setZLength				500 mm
+/gate/bottom_killbox/setMaterial						Air
+/gate/bottom_killbox/placement/setTranslation  			0 -220 0 mm
+/gate/bottom_killbox/vis/setVisible						1
+/gate/bottom_killbox/vis/setColor						white
+
+/gate/actor/addActor KillActor							bottom_kill_actor
+/gate/actor/bottom_kill_actor/save                      ./killed
+/gate/actor/bottom_kill_actor/attachTo					bottom_killbox
+
+#------------
+
+/gate/world/daughters/name								pixel_killer
+/gate/world/daughters/insert							box
+/gate/pixel_killer/geometry/setYLength					600 mm
+/gate/pixel_killer/geometry/setXLength					1 mm
+/gate/pixel_killer/geometry/setZLength					600 mm
+/gate/pixel_killer/setMaterial							Air
+/gate/pixel_killer/placement/setTranslation  			-330 0 0 mm
+/gate/pixel_killer/vis/setVisible						1
+/gate/pixel_killer/vis/setColor							white
+
+/gate/actor/addActor KillActor							pixel_killer_actor
+/gate/actor/pixel_killer_actor/save                     ./killed
+/gate/actor/pixel_killer_actor/attachTo					pixel_killer
+
+#------------
+
+#/gate/world/daughters/name								source_killer
+#/gate/world/daughters/insert							box
+#/gate/source_killer/geometry/setYLength					500 mm
+#/gate/source_killer/geometry/setXLength					1 mm
+#/gate/source_killer/geometry/setZLength					1000 mm
+#/gate/source_killer/setMaterial							Air
+#/gate/source_killer/placement/setTranslation  			655 0 0 mm
+#/gate/source_killer/vis/setVisible						1
+#/gate/source_killer/vis/setColor							white
+#
+#/gate/actor/addActor KillActor							source_kill_actor
+#/gate/actor/source_kill_actor/save                     /killed
+#/gate/actor/source_kill_actor/attachTo					source_killer
+
+#------------
+
+/gate/world/daughters/name								plus_z_killer
+/gate/world/daughters/insert							box
+/gate/plus_z_killer/geometry/setYLength					500 mm
+/gate/plus_z_killer/geometry/setXLength					600 mm
+/gate/plus_z_killer/geometry/setZLength					1 mm
+/gate/plus_z_killer/setMaterial							Air
+/gate/plus_z_killer/placement/setTranslation  			0 0 220 mm
+/gate/plus_z_killer/vis/setVisible						1
+/gate/plus_z_killer/vis/setColor						white
+
+/gate/actor/addActor KillActor							plus_z_killer_actor
+/gate/actor/plus_z_killer_actor/save                    ./killed
+/gate/actor/plus_z_killer_actor/attachTo				plus_z_killer
+
+#------------
+
+/gate/world/daughters/name								minus_z_killer
+/gate/world/daughters/insert							box
+/gate/minus_z_killer/geometry/setYLength				500 mm
+/gate/minus_z_killer/geometry/setXLength				600 mm
+/gate/minus_z_killer/geometry/setZLength				1 mm
+/gate/minus_z_killer/setMaterial						Air
+/gate/minus_z_killer/placement/setTranslation  			0 0 -220 mm
+/gate/minus_z_killer/vis/setVisible						1
+/gate/minus_z_killer/vis/setColor						white
+
+/gate/actor/addActor KillActor							minus_z_killer_actor
+/gate/actor/minus_z_killer_actor/save                   ./killed
+/gate/actor/minus_z_killer_actor/attachTo				minus_z_killer
+
+#------------
+
+# Gantry
+/gate/world/daughters/name								Gantry
+/gate/world/daughters/insert         					box
+/gate/Gantry/geometry/setZLength     					10 mm
+/gate/Gantry/geometry/setYLength     					10 mm
+/gate/Gantry/geometry/setXLength     					10 mm
+/gate/Gantry/placement/setTranslation  				390 0 0 mm
+/gate/Gantry/setMaterial             					Air
+/gate/Gantry/vis/setVisible          					1
+/gate/Gantry/vis/setColor            					yellow
+
+# ----------------------------ROTATION-----------------------------------------
+
+/gate/FOV/placement/setRotationAxis						0 0 1
+/gate/FOV/placement/setRotationAngle 3 deg
+
+# ----------------------------PATIENT_STUFF-----------------------------------------
+
+# the Schneider files generate the patient-HU files
+# which means any editing of the denisities and the HU values needs
+# to happen in the Schneider files. I had luck with the materialsTable
+
+# HU materials
+/gate/HounsfieldMaterialGenerator/SetMaterialTable                  data/Schneider2000MaterialsTable.txt
+/gate/HounsfieldMaterialGenerator/SetDensityTable                   data/Schneider2000DensitiesTable.txt
+/gate/HounsfieldMaterialGenerator/SetDensityTolerance               0.2 g/cm3
+/gate/HounsfieldMaterialGenerator/SetOutputMaterialDatabaseFilename data/patient-HUmaterials.db
+/gate/HounsfieldMaterialGenerator/SetOutputHUMaterialFilename       data/patient-HU2mat.txt
+/gate/HounsfieldMaterialGenerator/Generate
+
+
+# Patient
+/gate/FOV/daughters/name                                patient
+/gate/FOV/daughters/insert                              ImageNestedParametrisedVolume
+/gate/geometry/setMaterialDatabase                      data/patient-HUmaterials.db
+/gate/patient/geometry/setHUToMaterialFile              data/patient-HU2mat.txt
+/gate/patient/geometry/setImage /home/gmf/Projects/Proton_Imager/Project_Data/cropped/0001.mha
+
+/gate/actor/addActor GPUTransTomoActor my_gpuactor
+/gate/actor/my_gpuactor/attachTo patient
+/gate/actor/my_gpuactor/setGPUBufferSize 8000000000
+/gate/actor/my_gpuactor/setGPUDeviceID 1
+
+#=====================================================
+# PHYSICS
+#=====================================================
+
+/gate/physics/addPhysicsList emstandard_opt1
+/gate/physics/addPhysicsList QGSP_BIC_EMY
+
+/gate/physics/Gamma/SetCutInRegion						world 10 mm
+/gate/physics/Electron/SetCutInRegion   				world 10 mm
+/gate/physics/Positron/SetCutInRegion					world 10 mm
+/gate/physics/Proton/SetCutInRegion						world 10 mm
+
+#/gate/physics/Gamma/SetCutInRegion						patient 5 mm
+#/gate/physics/Electron/SetCutInRegion   				patient 5 mm
+#/gate/physics/Positron/SetCutInRegion   				patient 5 mm
+#/gate/physics/Proton/SetCutInRegion						patient 5 mm
+
+/gate/physics/Gamma/SetCutInRegion						pixel 10 mm
+/gate/physics/Electron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Positron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Proton/SetCutInRegion						pixel 10 mm
+
+# /gate/physics/SetMinRemainingRangeInRegion world 10 mm
+# /gate/physics/ActivateSpecialCuts e-
+
+/gate/physics/displayCuts
+
+
+# Makes the phantom a detector which detects dose
+/gate/actor/addActor									DoseActor  dose3d
+/gate/actor/dose3d/attachTo              				patient
+/gate/actor/dose3d/stepHitType           				random
+/gate/actor/dose3d/setPosition           				0 0 0 cm
+/gate/actor/dose3d/setResolution         				28 28 28
+/gate/actor/dose3d/enableEdep            				true
+/gate/actor/dose3d/enableUncertaintyEdep 				false
+/gate/actor/dose3d/enableDose            				false
+/gate/actor/dose3d/enableUncertaintyDose 				false
+/gate/actor/dose3d/enableNumberOfHits    				false
+/gate/actor/dose3d/save /home/gmf/.temp_dir/phantom_deposition.txt
+
+#=====================================================
+# INITIALISATION
+#=====================================================
+
+
+# Attaching geometries to sensitive detectors
+/gate/systems/CTscanner/module/attach					module
+/gate/systems/CTscanner/cluster_0/attach				cluster
+/gate/systems/CTscanner/pixel_0/attach					pixel
+
+/gate/pixel/attachCrystalSD
+
+/gate/output/ascii/enable
+/gate/output/ascii/reset
+/gate/output/ascii/setFileName /home/gmf/.temp_dir/simulation_angle_output
+
+/gate/run/initialize
+#=====================================================
+# BEAM
+#=====================================================
+
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/attachTo							Gantry
+/gate/source/mybeam/gps/particle       					proton
+/gate/source/mybeam/gps/ene/mono      					146.7 MeV
+/gate/source/mybeam/gps/ene/type       					Gauss
+/gate/source/mybeam/gps/ene/sigma     					0.8 MeV
+/gate/source/mybeam/gps/pos/type       					Point
+/gate/source/mybeam/gps/pos/halfx      					8 mm
+/gate/source/mybeam/gps/pos/halfy      					8 mm
+/gate/source/mybeam/gps/pos/centre     					-300 0 0 mm
+/gate/source/mybeam/gps/pos/rot1       					0 1 0
+/gate/source/mybeam/gps/pos/rot2       					0 0 1
+/gate/source/mybeam/gps/pos/type       					Plane
+/gate/source/mybeam/gps/pos/shape      					Rectangle
+/gate/source/mybeam/gps/direction      					-1 0 0
+/gate/source/mybeam/gps/ang/type       					focused
+/gate/source/mybeam/gps/ang/rot1       					0 1 0
+/gate/source/mybeam/gps/ang/rot2       					0 0 1
+/gate/source/mybeam/gps/ang/focuspoint 					-310 0 0 mm
+#/gate/source/mybeam/visualize							300 red 20
+
+#=====================================================
+# DETECTORS
+#=====================================================
+
+# Photon counting detector
+#/gate/actor/addActor FluenceActor						DetectorActor
+#/gate/actor/DetectorActor/save              			output/detector.mhd
+#/gate/actor/DetectorActor/attachTo          			cluster
+#/gate/actor/DetectorActor/stepHitType       			pre
+#/gate/actor/DetectorActor/setSize           			10 500 500 mm
+#/gate/actor/DetectorActor/setResolution     			1 100 100
+#/gate/actor/DetectorActor/enableScatter     			true
+#/gate/actor/DetectorActor/saveEveryNSeconds 			20
+
+# -----------------------------DETECTORS---------------------------------------
+
+# Outputs statistics
+/gate/actor/addActor									SimulationStatisticActor stat
+/gate/actor/stat/save 									output/stats.txt
+/gate/actor/stat/saveEveryNSeconds						20
+
+#=====================================================
+# MAIN
+#=====================================================
+
+# DEBUG
+#/tracking/verbose 1
+#/tracking/verbose 1
+
+/gate/application/setTimeSlice							1		s
+/gate/application/setTimeStart							0.		s
+/gate/application/setTimeStop							1.		s
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries				100000
+/gate/application/start

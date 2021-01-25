@@ -1,0 +1,240 @@
+
+#=====================================================
+# VERBOSITY
+#=====================================================
+
+/control/execute mac/verbose.mac
+
+#=====================================================
+# VISUALISATION
+#=====================================================
+
+#/control/execute mac/visu.mac
+
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+# World
+/gate/geometry/setMaterialDatabase						data/GateMaterials.db
+/gate/world/setMaterial									Air
+/gate/world/geometry/setXLength							360 mm
+/gate/world/geometry/setYLength							84 mm
+/gate/world/geometry/setZLength    						84 mm
+/gate/world/vis/setVisible                              1
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Scanner
+/gate/world/daughters/name								CTscanner
+/gate/world/daughters/insert            				box
+/gate/CTscanner/geometry/setZLength						84 mm
+/gate/CTscanner/geometry/setYLength						84 mm
+/gate/CTscanner/geometry/setXLength       				50 mm
+/gate/CTscanner/placement/setTranslation  				-155 0 0 mm
+/gate/CTscanner/setMaterial               				Air
+/gate/CTscanner/vis/setVisible            				0
+/gate/CTscanner/vis/setColor              				white
+
+#------------
+
+# Module contains clusters
+/gate/CTscanner/daughters/name							module
+/gate/CTscanner/daughters/insert            			box
+/gate/module/geometry/setZLength						84 mm
+/gate/module/geometry/setYLength       					84 mm
+/gate/module/geometry/setXLength       					50 mm
+#/gate/module/placement/setTranslation					-540 0 0 mm
+/gate/module/setMaterial               					Air
+/gate/module/vis/setVisible            					0
+/gate/module/vis/setColor              					blue
+
+#------------
+
+# Cluster contains pixels
+/gate/module/daughters/name								cluster
+/gate/module/daughters/insert            				box
+/gate/cluster/geometry/setZLength       				84 mm
+/gate/cluster/geometry/setYLength       				84 mm
+/gate/cluster/geometry/setXLength       				50 mm
+#/gate/cluster/placement/setTranslation  				-540 0 0 mm
+/gate/cluster/setMaterial               				Air
+/gate/cluster/vis/setVisible            				0
+/gate/cluster/vis/setColor              				green
+
+# ----------------------------PIXEL-----------------------------------------
+
+# Pixels are the sensitive portion of the detector
+/gate/cluster/daughters/name							pixel
+/gate/cluster/daughters/insert							box
+/gate/pixel/geometry/setXLength							50 mm
+/gate/pixel/geometry/setYLength 						0.65625 mm
+/gate/pixel/geometry/setZLength 						0.65625 mm
+#/gate/pixel/setMaterial 			    				Air
+/gate/pixel/setMaterial 			    				hd_scint_glass_Eu
+/gate/pixel/vis/setColor 			    				red
+
+
+# REPEAT PIXEl_0
+/gate/pixel/repeaters/insert							cubicArray
+/gate/pixel/cubicArray/setRepeatNumberX 				1
+/gate/pixel/cubicArray/setRepeatNumberY 				128
+/gate/pixel/cubicArray/setRepeatNumberZ   				128
+/gate/pixel/cubicArray/setRepeatVector 	    			0.0 0.65625 0.65625 mm
+/gate/pixel/cubicArray/autoCenter 		    			true
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Gantry
+/gate/world/daughters/name								Gantry
+/gate/world/daughters/insert         					box
+/gate/Gantry/geometry/setZLength     					10 mm
+/gate/Gantry/geometry/setYLength     					10 mm
+/gate/Gantry/geometry/setXLength     					10 mm
+/gate/Gantry/placement/setTranslation  				175 0 0 mm
+/gate/Gantry/setMaterial             					Air
+/gate/Gantry/vis/setVisible          					1
+/gate/Gantry/vis/setColor            					yellow
+
+# ----------------------------PATIENT_STUFF-----------------------------------------
+
+# the Schneider files generate the patient-HU files
+# which means any editing of the denisities and the HU values needs
+# to happen in the Schneider files. I had luck with the materialsTable
+
+# HU materials
+/gate/HounsfieldMaterialGenerator/SetMaterialTable /home/gmf/Projects/Summer_2020_Proton_Imager/Proton_Imager/Project_Data/cubic_tumor_collections/128_128_128_cubic_tumors/tumor_128_128_128_002_material.txt
+/gate/HounsfieldMaterialGenerator/SetDensityTable /home/gmf/Projects/Summer_2020_Proton_Imager/Proton_Imager/Project_Data/cubic_tumor_collections/128_128_128_cubic_tumors/tumor_128_128_128_002_density.txt
+/gate/HounsfieldMaterialGenerator/SetDensityTolerance               0.2 g/cm3
+/gate/HounsfieldMaterialGenerator/SetOutputMaterialDatabaseFilename data/patient-HUmaterials.db
+/gate/HounsfieldMaterialGenerator/SetOutputHUMaterialFilename       data/patient-HU2mat.txt
+/gate/HounsfieldMaterialGenerator/Generate
+
+
+# Patient
+/gate/world/daughters/name                                patient
+/gate/world/daughters/insert                              ImageNestedParametrisedVolume
+/gate/geometry/setMaterialDatabase                      data/patient-HUmaterials.db
+/gate/patient/geometry/setHUToMaterialFile              data/patient-HU2mat.txt
+/gate/patient/geometry/setImage /home/gmf/Projects/Summer_2020_Proton_Imager/Proton_Imager/Project_Data/cubic_tumor_collections/128_128_128_cubic_tumors/tumor_128_128_128_002.mha
+
+/gate/actor/addActor GPUTransTomoActor my_gpuactor
+/gate/actor/my_gpuactor/attachTo patient
+# this is the buffer size to allow 10 processes to have equal amounts of gpu
+/gate/actor/my_gpuactor/setGPUBufferSize 2147483647
+/gate/actor/my_gpuactor/setGPUDeviceID 1
+
+/gate/patient/placement/setRotationAxis						0 0 1
+/gate/patient/placement/setRotationAngle 3.0 deg
+/gate/patient/placement/setTranslation 0 0 0 mm
+#=====================================================
+# PHYSICS
+#=====================================================
+
+/gate/physics/addPhysicsList emstandard_opt1
+/gate/physics/addPhysicsList QGSP_BIC_EMY
+
+/gate/physics/Gamma/SetCutInRegion						world 10 mm
+/gate/physics/Electron/SetCutInRegion   				world 10 mm
+/gate/physics/Positron/SetCutInRegion					world 10 mm
+/gate/physics/Proton/SetCutInRegion						world 10 mm
+
+/gate/physics/Gamma/SetCutInRegion						patient 5 mm
+/gate/physics/Electron/SetCutInRegion   				patient 5 mm
+/gate/physics/Positron/SetCutInRegion   				patient 5 mm
+/gate/physics/Proton/SetCutInRegion						patient 5 mm
+
+/gate/physics/Gamma/SetCutInRegion						pixel 10 mm
+/gate/physics/Electron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Positron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Proton/SetCutInRegion						pixel 10 mm
+
+# /gate/physics/SetMinRemainingRangeInRegion world 10 mm
+# /gate/physics/ActivateSpecialCuts e-
+
+/gate/physics/displayCuts
+
+
+# Makes the phantom a detector which detects dose
+/gate/actor/addActor									DoseActor  dose3d
+/gate/actor/dose3d/attachTo              				patient
+/gate/actor/dose3d/stepHitType           				random
+/gate/actor/dose3d/setPosition           				0 0 0 cm
+/gate/actor/dose3d/setResolution         				112 112 112
+/gate/actor/dose3d/enableEdep            				true
+/gate/actor/dose3d/enableUncertaintyEdep 				false
+/gate/actor/dose3d/enableDose            				false
+/gate/actor/dose3d/enableUncertaintyDose 				false
+/gate/actor/dose3d/enableNumberOfHits    				false
+/gate/actor/dose3d/save /home/gmf/.gate_temp_dir/phantom_deposition_angle_3.000000.mhd
+
+#=====================================================
+# INITIALISATION
+#=====================================================
+
+
+# Attaching geometries to sensitive detectors
+/gate/systems/CTscanner/module/attach					module
+/gate/systems/CTscanner/cluster_0/attach				cluster
+/gate/systems/CTscanner/pixel_0/attach					pixel
+
+/gate/pixel/attachCrystalSD
+
+/gate/output/ascii/enable
+/gate/output/ascii/reset
+/gate/output/ascii/setFileName /home/gmf/.gate_temp_dir/simulation_angle_3.000000_output
+
+/gate/run/initialize
+#=====================================================
+# BEAM
+#=====================================================
+
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/attachTo							Gantry
+/gate/source/mybeam/gps/particle       					proton
+/gate/source/mybeam/gps/ene/mono      					147.7 MeV
+/gate/source/mybeam/gps/ene/type       					Gauss
+/gate/source/mybeam/gps/ene/sigma     					0.8 MeV
+/gate/source/mybeam/gps/pos/type       					Point
+/gate/source/mybeam/gps/pos/halfx      					42 mm
+/gate/source/mybeam/gps/pos/halfy      					42 mm
+/gate/source/mybeam/gps/pos/centre     					-5 0 0 mm
+/gate/source/mybeam/gps/pos/rot1       					0 1 0
+/gate/source/mybeam/gps/pos/rot2       					0 0 1
+/gate/source/mybeam/gps/pos/type       					Plane
+/gate/source/mybeam/gps/pos/shape      					Rectangle
+/gate/source/mybeam/gps/direction      					-1 0 0
+/gate/source/mybeam/gps/ang/type       					iso
+/gate/source/mybeam/gps/mintheta						180. deg
+/gate/source/mybeam/gps/maxtheta						180. deg
+/gate/source/mybeam/gps/minphi							0. deg
+/gate/source/mybeam/gps/maxphi							0. deg
+#/gate/source/mybeam/gps/ang/focuspoint 					-14 0 0 mm
+#/gate/source/mybeam/visualize							300 red 20
+
+#=====================================================
+# DETECTORS
+#=====================================================
+
+# Outputs statistics
+/gate/actor/addActor									SimulationStatisticActor stat
+/gate/actor/stat/save 									output/stats.txt
+/gate/actor/stat/saveEveryNSeconds						20
+
+#=====================================================
+# MAIN
+#=====================================================
+
+# DEBUG
+#/tracking/verbose 1
+#/tracking/verbose 1
+
+/gate/application/setTimeSlice							1		s
+/gate/application/setTimeStart							0.		s
+/gate/application/setTimeStop							1.		s
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries				100000
+/gate/application/start
