@@ -1,0 +1,185 @@
+
+#=====================================================
+# VERBOSITY
+#=====================================================
+
+/control/execute mac/verbose.mac
+
+#=====================================================
+# VISUALISATION
+#=====================================================
+
+/control/execute mac/visu.mac
+
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+# World
+/gate/geometry/setMaterialDatabase						data/GateMaterials.db
+/gate/world/setMaterial									Air
+/gate/world/geometry/setXLength							1000 mm
+/gate/world/geometry/setYLength							1000 mm
+/gate/world/geometry/setZLength    						1000 mm
+/gate/world/vis/setVisible                              1
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Scanner
+/gate/world/daughters/name								CTscanner
+/gate/world/daughters/insert            				box
+/gate/CTscanner/geometry/setZLength						280 mm
+/gate/CTscanner/geometry/setYLength						280 mm
+/gate/CTscanner/geometry/setXLength       				280 mm
+/gate/CTscanner/setMaterial               				Air
+/gate/CTscanner/vis/setVisible            				0
+/gate/CTscanner/vis/setColor              				white
+
+#------------
+
+# Module contains clusters
+/gate/CTscanner/daughters/name							module
+/gate/CTscanner/daughters/insert            			box
+/gate/module/geometry/setZLength						280 mm
+/gate/module/geometry/setYLength       					280 mm
+/gate/module/geometry/setXLength       					280 mm
+/gate/module/setMaterial               					Air
+/gate/module/vis/setVisible            					0
+/gate/module/vis/setColor              					blue
+
+#------------
+
+# Cluster contains pixels
+/gate/module/daughters/name								cluster
+/gate/module/daughters/insert            				box
+/gate/cluster/geometry/setZLength       				280 mm
+/gate/cluster/geometry/setYLength       				280 mm
+/gate/cluster/geometry/setXLength       				280 mm
+#/gate/cluster/placement/setTranslation  				-540 0 0 mm
+/gate/cluster/setMaterial               				Air
+/gate/cluster/vis/setVisible            				0
+/gate/cluster/vis/setColor              				green
+
+# ----------------------------PIXEL-----------------------------------------
+
+# Pixels are the sensitive portion of the detector
+/gate/cluster/daughters/name							pixel
+/gate/cluster/daughters/insert							box
+/gate/pixel/geometry/setXLength							10 mm
+/gate/pixel/geometry/setYLength 						50 mm
+/gate/pixel/geometry/setZLength 						10 mm
+#/gate/pixel/setMaterial 			    				Air
+/gate/pixel/setMaterial 			    				hd_scint_glass_Eu
+/gate/pixel/vis/setColor 			    				red
+
+
+# REPEAT PIXEl_0
+/gate/pixel/repeaters/insert							cubicArray
+/gate/pixel/cubicArray/setRepeatNumberX 				8
+/gate/pixel/cubicArray/setRepeatNumberY 				1
+/gate/pixel/cubicArray/setRepeatNumberZ   				8
+/gate/pixel/cubicArray/setRepeatVector 	    			11. 0. 11.  mm
+/gate/pixel/cubicArray/autoCenter 		    			true
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Gantry
+/gate/world/daughters/name								Gantry
+/gate/world/daughters/insert         					box
+/gate/Gantry/geometry/setZLength     					10 mm
+/gate/Gantry/geometry/setYLength     					10 mm
+/gate/Gantry/geometry/setXLength     					10 mm
+/gate/Gantry/placement/setTranslation  				175 0 0 mm
+/gate/Gantry/setMaterial             					Air
+/gate/Gantry/vis/setVisible          					1
+/gate/Gantry/vis/setColor            					yellow
+
+#=====================================================
+# PHYSICS
+#=====================================================
+
+/gate/physics/addPhysicsList emstandard_opt1
+/gate/physics/addPhysicsList QGSP_BIC_EMY
+
+/gate/physics/Gamma/SetCutInRegion						world 10 mm
+/gate/physics/Electron/SetCutInRegion   				world 10 mm
+/gate/physics/Positron/SetCutInRegion					world 10 mm
+/gate/physics/Proton/SetCutInRegion						world 10 mm
+
+/gate/physics/Gamma/SetCutInRegion						pixel 10 mm
+/gate/physics/Electron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Positron/SetCutInRegion   				pixel 10 mm
+/gate/physics/Proton/SetCutInRegion						pixel 10 mm
+
+# /gate/physics/SetMinRemainingRangeInRegion world 10 mm
+# /gate/physics/ActivateSpecialCuts e-
+
+/gate/physics/displayCuts
+
+#=====================================================
+# INITIALISATION
+#=====================================================
+
+
+# Attaching geometries to sensitive detectors
+/gate/systems/CTscanner/module/attach					module
+/gate/systems/CTscanner/cluster_0/attach				cluster
+/gate/systems/CTscanner/pixel_0/attach					pixel
+
+/gate/pixel/attachCrystalSD
+
+/gate/output/ascii/enable
+/gate/output/ascii/reset
+/gate/output/ascii/setFileName output/
+
+/gate/run/initialize
+#=====================================================
+# BEAM
+#=====================================================
+
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/attachTo							Gantry
+/gate/source/mybeam/gps/particle       					proton
+/gate/source/mybeam/gps/ene/mono      					147.7 MeV
+/gate/source/mybeam/gps/ene/type       					Gauss
+/gate/source/mybeam/gps/ene/sigma     					0.8 MeV
+/gate/source/mybeam/gps/pos/type       					Point
+/gate/source/mybeam/gps/pos/halfx      					5 mm
+/gate/source/mybeam/gps/pos/halfy      					5 mm
+/gate/source/mybeam/gps/pos/centre     					-5 0 0 mm
+/gate/source/mybeam/gps/pos/rot1       					0 1 0
+/gate/source/mybeam/gps/pos/rot2       					0 0 1
+/gate/source/mybeam/gps/pos/type       					Plane
+/gate/source/mybeam/gps/pos/shape      					Rectangle
+/gate/source/mybeam/gps/direction      					-1 0 0
+/gate/source/mybeam/gps/ang/type       					focused
+/gate/source/mybeam/gps/ang/rot1       					0 1 0
+/gate/source/mybeam/gps/ang/rot2       					0 0 1
+/gate/source/mybeam/gps/ang/focuspoint 					-15 0 0 mm
+
+#=====================================================
+# DETECTORS
+#=====================================================
+
+# Outputs statistics
+/gate/actor/addActor									SimulationStatisticActor stat
+/gate/actor/stat/save 									output/stats.txt
+/gate/actor/stat/saveEveryNSeconds						20
+
+#=====================================================
+# MAIN
+#=====================================================
+
+# DEBUG
+#/tracking/verbose 1
+#/tracking/verbose 1
+
+/gate/application/setTimeSlice							1		s
+/gate/application/setTimeStart							0.		s
+/gate/application/setTimeStop							1.		s
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries				1
+/gate/application/start
