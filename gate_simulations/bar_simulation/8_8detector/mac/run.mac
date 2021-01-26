@@ -63,23 +63,23 @@
 # ----------------------------PIXEL-----------------------------------------
 
 # Pixels are the sensitive portion of the detector
-/gate/cluster/daughters/name							pixel
+/gate/cluster/daughters/name							bar
 /gate/cluster/daughters/insert							box
-/gate/pixel/geometry/setXLength							10 mm
-/gate/pixel/geometry/setYLength 						50 mm
-/gate/pixel/geometry/setZLength 						10 mm
-#/gate/pixel/setMaterial 			    				Air
-/gate/pixel/setMaterial 			    				hd_scint_glass_Eu
-/gate/pixel/vis/setColor 			    				red
+/gate/bar/geometry/setXLength							4.8 mm
+/gate/bar/geometry/setYLength							80 mm
+/gate/bar/geometry/setZLength							10 mm
+#/gate/bar/setMaterial									Air
+/gate/bar/setMaterial									hd_scint_glass_Eu
+/gate/bar/vis/setColor									red
 
 
 # REPEAT PIXEl_0
-/gate/pixel/repeaters/insert							cubicArray
-/gate/pixel/cubicArray/setRepeatNumberX 				8
-/gate/pixel/cubicArray/setRepeatNumberY 				1
-/gate/pixel/cubicArray/setRepeatNumberZ   				8
-/gate/pixel/cubicArray/setRepeatVector 	    			11. 0. 11.  mm
-/gate/pixel/cubicArray/autoCenter 		    			true
+/gate/bar/repeaters/insert								cubicArray
+/gate/bar/cubicArray/setRepeatNumberX					8
+/gate/bar/cubicArray/setRepeatNumberY					1
+/gate/bar/cubicArray/setRepeatNumberZ   				8
+/gate/bar/cubicArray/setRepeatVector 	    			4.8 1. 10.  mm
+/gate/bar/cubicArray/autoCenter 		    			true
 
 # ----------------------------GEOMETRY-----------------------------------------
 
@@ -89,7 +89,7 @@
 /gate/Gantry/geometry/setZLength     					10 mm
 /gate/Gantry/geometry/setYLength     					10 mm
 /gate/Gantry/geometry/setXLength     					10 mm
-/gate/Gantry/placement/setTranslation  				175 0 0 mm
+/gate/Gantry/placement/setTranslation  				    175 0 0 mm
 /gate/Gantry/setMaterial             					Air
 /gate/Gantry/vis/setVisible          					1
 /gate/Gantry/vis/setColor            					yellow
@@ -106,10 +106,10 @@
 /gate/physics/Positron/SetCutInRegion					world 10 mm
 /gate/physics/Proton/SetCutInRegion						world 10 mm
 
-/gate/physics/Gamma/SetCutInRegion						pixel 10 mm
-/gate/physics/Electron/SetCutInRegion   				pixel 10 mm
-/gate/physics/Positron/SetCutInRegion   				pixel 10 mm
-/gate/physics/Proton/SetCutInRegion						pixel 10 mm
+/gate/physics/Gamma/SetCutInRegion						bar 10 mm
+/gate/physics/Electron/SetCutInRegion   				bar 10 mm
+/gate/physics/Positron/SetCutInRegion   				bar 10 mm
+/gate/physics/Proton/SetCutInRegion						bar 10 mm
 
 # /gate/physics/SetMinRemainingRangeInRegion world 10 mm
 # /gate/physics/ActivateSpecialCuts e-
@@ -124,13 +124,13 @@
 # Attaching geometries to sensitive detectors
 /gate/systems/CTscanner/module/attach					module
 /gate/systems/CTscanner/cluster_0/attach				cluster
-/gate/systems/CTscanner/pixel_0/attach					pixel
+/gate/systems/CTscanner/pixel_0/attach					bar
 
-/gate/pixel/attachCrystalSD
+/gate/bar/attachCrystalSD
 
 /gate/output/ascii/enable
 /gate/output/ascii/reset
-/gate/output/ascii/setFileName output/
+/gate/output/ascii/setFileName output/grant
 
 /gate/run/initialize
 #=====================================================
@@ -139,32 +139,27 @@
 
 /gate/source/addSource mybeam gps
 /gate/source/mybeam/attachTo							Gantry
-/gate/source/mybeam/gps/particle       					proton
+/gate/source/mybeam/gps/particle       					gamma
 /gate/source/mybeam/gps/ene/mono      					147.7 MeV
 /gate/source/mybeam/gps/ene/type       					Gauss
 /gate/source/mybeam/gps/ene/sigma     					0.8 MeV
-/gate/source/mybeam/gps/pos/type       					Point
 /gate/source/mybeam/gps/pos/halfx      					5 mm
 /gate/source/mybeam/gps/pos/halfy      					5 mm
 /gate/source/mybeam/gps/pos/centre     					-5 0 0 mm
 /gate/source/mybeam/gps/pos/rot1       					0 1 0
 /gate/source/mybeam/gps/pos/rot2       					0 0 1
-/gate/source/mybeam/gps/pos/type       					Plane
+/gate/source/mybeam/gps/pos/type       					Beam
 /gate/source/mybeam/gps/pos/shape      					Rectangle
 /gate/source/mybeam/gps/direction      					-1 0 0
-/gate/source/mybeam/gps/ang/type       					focused
-/gate/source/mybeam/gps/ang/rot1       					0 1 0
-/gate/source/mybeam/gps/ang/rot2       					0 0 1
-/gate/source/mybeam/gps/ang/focuspoint 					-15 0 0 mm
+#/gate/source/mybeam/gps/ang/type       					focused
+#/gate/source/mybeam/gps/ang/rot1       					0 1 0
+#/gate/source/mybeam/gps/ang/rot2       					0 0 1
+#/gate/source/mybeam/gps/ang/focuspoint 					-15 0 0 mm
 
-#=====================================================
-# DETECTORS
-#=====================================================
-
-# Outputs statistics
-/gate/actor/addActor									SimulationStatisticActor stat
-/gate/actor/stat/save 									output/stats.txt
-/gate/actor/stat/saveEveryNSeconds						20
+# The pos/type Beam eliminates the need
+# for angular specifications since
+# it defaults to shooting the beam perfectly
+# perpendicular to the emitting surface
 
 #=====================================================
 # MAIN
@@ -181,5 +176,5 @@
 /gate/random/setEngineName MersenneTwister
 /gate/random/setEngineSeed auto
 
-/gate/application/setTotalNumberOfPrimaries				1
+/gate/application/setTotalNumberOfPrimaries				100
 /gate/application/start
