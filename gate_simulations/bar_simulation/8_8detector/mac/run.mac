@@ -9,7 +9,7 @@
 # VISUALISATION
 #=====================================================
 
-/control/execute mac/visu.mac
+#/control/execute mac/visu.mac
 
 #=====================================================
 # GEOMETRY
@@ -130,7 +130,7 @@
 
 /gate/output/ascii/enable
 /gate/output/ascii/reset
-/gate/output/ascii/setFileName output/grant
+/gate/output/ascii/setFileName output/w_42.50
 
 /gate/run/initialize
 #=====================================================
@@ -143,7 +143,7 @@
 /gate/source/mybeam/gps/ene/mono      					147.7 MeV
 /gate/source/mybeam/gps/ene/type       					Gauss
 /gate/source/mybeam/gps/ene/sigma     					0.8 MeV
-/gate/source/mybeam/gps/pos/halfx      					5 mm
+/gate/source/mybeam/gps/pos/halfx 42.50 mm
 /gate/source/mybeam/gps/pos/halfy      					5 mm
 /gate/source/mybeam/gps/pos/centre     					-5 0 0 mm
 /gate/source/mybeam/gps/pos/rot1       					0 1 0
