@@ -57,7 +57,7 @@
 /gate/cluster/geometry/setXLength       				280 mm
 #/gate/cluster/placement/setTranslation  				-540 0 0 mm
 /gate/cluster/placement/setRotationAxis         0 1 0
-/gate/cluster/placement/setRotationAngle 10 deg
+/gate/cluster/placement/setRotationAngle 5 deg
 
 /gate/cluster/setMaterial               				Air
 /gate/cluster/vis/setVisible            				0
@@ -136,7 +136,7 @@
 /gate/output/ascii/setOutFileHitsFlag            1
 /gate/output/ascii/setOutFileSinglesFlag         0
 
-/gate/output/ascii/setFileName output/W05__H05__A010_
+/gate/output/ascii/setFileName output/W05__H05__A005_
 
 /gate/run/initialize
 #=====================================================
