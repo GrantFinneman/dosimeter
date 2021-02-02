@@ -222,3 +222,36 @@ def bar_chart_helper_rot(bar_heights):
 
     rotated_data = bar_heights #np.rot90(bar_heights.reshape((8, 8)), axes=(0, 1)).flatten() # This rotates the data by 90 degrees so that channel 1 is in the top left corner and channel 8 in the top right.
     return x, y, z, rotated_data, dy, dz
+
+#=========================================================================
+
+def load_gate_data_by_angle(extracted_dir = '/home/gmf/Projects/dosimeter/geant_data/extracted_data/grant_gate/'):
+    '''Function that will parse all of the extracted run names and generate a dictionary of all of the run width and height combinations. This
+    will allow me to plug in a width and height that I want and get all of the angles of with the beam of that size'''
+    
+    
+    # Generating the large list of all the paths
+    paths = sorted([os.path.join(extracted_dir, file) for file in os.listdir(extracted_dir)
+               if file.endswith('.txt')])
+
+    # Generates a dictionary seperating out the files based on beam size
+    size_dict = {}
+    for width in range(5, 51, 5):
+        for height in range(5, 51, 5):
+            w_pattern = str(width).zfill(2)
+            h_pattern = str(height).zfill(2)
+            angle_list = [path for path in paths 
+                         if all((f'W{w_pattern}' in path, f'H{h_pattern}' in path))]
+            size_dict[f'W{w_pattern}_H{h_pattern}'] = angle_list
+            
+    # Generates a dictionary that will contain a dictionary mapping the angle to the edep
+    size_energy_dict = {}
+    for beam_size, file_list in size_dict.items():
+        edep_dict = {}
+        for file in file_list:
+            file_name = os.path.basename(file)
+            df = pd.read_csv(file, delim_whitespace=True)
+            edep = np.array(df['edep'])
+            edep_dict[file_name] = edep
+        size_energy_dict[beam_size] = edep_dict
+    return size_energy_dict
