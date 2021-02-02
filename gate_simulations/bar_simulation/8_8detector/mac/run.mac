@@ -9,7 +9,7 @@
 # VISUALISATION
 #=====================================================
 
-#/control/execute mac/visu.mac
+/control/execute mac/visu.mac
 
 #=====================================================
 # GEOMETRY
@@ -184,5 +184,5 @@
 /gate/random/setEngineName MersenneTwister
 /gate/random/setEngineSeed auto
 
-/gate/application/setTotalNumberOfPrimaries				10000
+/gate/application/setTotalNumberOfPrimaries				100
 /gate/application/start
