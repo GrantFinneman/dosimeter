@@ -250,7 +250,7 @@ def load_gate_data_by_angle(extracted_dir = '/home/gmf/Projects/dosimeter/geant_
         edep_dict = {}
         for file in file_list:
             file_name = os.path.basename(file)
-            df = pd.read_csv(file, delim_whitespace=True)
+            df = pd.read_csv(file, delim_whitespace=True, skiprows=3)
             edep = np.array(df['edep'])
             edep_dict[file_name] = edep
         size_energy_dict[beam_size] = edep_dict
