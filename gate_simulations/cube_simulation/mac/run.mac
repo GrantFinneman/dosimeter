@@ -9,7 +9,7 @@
 # VISUALISATION
 #=====================================================
 
-/control/execute mac/visu.mac
+#/control/execute mac/visu.mac
 
 #=====================================================
 # GEOMETRY
@@ -57,7 +57,7 @@
 /gate/cluster/geometry/setXLength       				280 mm
 #/gate/cluster/placement/setTranslation  				-540 0 0 mm
 /gate/cluster/placement/setRotationAxis         0 1 0
-/gate/cluster/placement/setRotationAngle 40 deg
+/gate/cluster/placement/setRotationAngle 120 deg
 
 /gate/cluster/setMaterial               				Air
 /gate/cluster/vis/setVisible            				0
@@ -136,7 +136,7 @@
 /gate/output/ascii/setOutFileHitsFlag            1
 /gate/output/ascii/setOutFileSinglesFlag         0
 
-/gate/output/ascii/setFileName output/W05__H05__A040_cubes_
+/gate/output/ascii/setFileName output/W05__H05__A120_cubes_
 
 /gate/run/initialize
 #=====================================================
@@ -184,5 +184,5 @@
 /gate/random/setEngineName MersenneTwister
 /gate/random/setEngineSeed auto
 
-/gate/application/setTotalNumberOfPrimaries				1000
+/gate/application/setTotalNumberOfPrimaries				10000
 /gate/application/start
