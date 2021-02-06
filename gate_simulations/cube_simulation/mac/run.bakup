@@ -1,0 +1,180 @@
+
+#=====================================================
+# VERBOSITY
+#=====================================================
+
+/control/execute mac/verbose.mac
+
+#=====================================================
+# VISUALISATION
+#=====================================================
+
+/control/execute mac/visu.mac
+
+#=====================================================
+# GEOMETRY
+#=====================================================
+
+# World
+/gate/geometry/setMaterialDatabase						data/GateMaterials.db
+/gate/world/setMaterial									Air
+/gate/world/geometry/setXLength							1000 mm
+/gate/world/geometry/setYLength							1000 mm
+/gate/world/geometry/setZLength    						1000 mm
+/gate/world/vis/setVisible                              1
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Scanner
+/gate/world/daughters/name								CTscanner
+/gate/world/daughters/insert            				box
+/gate/CTscanner/geometry/setZLength						280 mm
+/gate/CTscanner/geometry/setYLength						280 mm
+/gate/CTscanner/geometry/setXLength       				280 mm
+/gate/CTscanner/setMaterial               				Air
+/gate/CTscanner/vis/setVisible            				0
+/gate/CTscanner/vis/setColor              				white
+
+#------------
+
+# Module contains clusters
+/gate/CTscanner/daughters/name							module
+/gate/CTscanner/daughters/insert            			box
+/gate/module/geometry/setZLength						280 mm
+/gate/module/geometry/setYLength       					280 mm
+/gate/module/geometry/setXLength       					280 mm
+/gate/module/setMaterial               					Air
+/gate/module/vis/setVisible            					0
+/gate/module/vis/setColor              					blue
+
+#------------
+
+# Cluster contains pixels
+/gate/module/daughters/name								cluster
+/gate/module/daughters/insert            				box
+/gate/cluster/geometry/setZLength       				280 mm
+/gate/cluster/geometry/setYLength       				280 mm
+/gate/cluster/geometry/setXLength       				280 mm
+#/gate/cluster/placement/setTranslation  				-540 0 0 mm
+/gate/cluster/setMaterial               				Air
+/gate/cluster/vis/setVisible            				0
+/gate/cluster/vis/setColor              				green
+
+# ----------------------------PIXEL-----------------------------------------
+
+# Pixels are the sensitive portion of the detector
+/gate/cluster/daughters/name							bar
+/gate/cluster/daughters/insert							box
+/gate/bar/geometry/setXLength							4.8 mm
+/gate/bar/geometry/setYLength							80 mm
+/gate/bar/geometry/setZLength							10 mm
+#/gate/bar/setMaterial									Air
+/gate/bar/setMaterial									hd_scint_glass_Eu
+/gate/bar/vis/setColor									red
+
+
+# REPEAT PIXEl_0
+/gate/bar/repeaters/insert								cubicArray
+/gate/bar/cubicArray/setRepeatNumberX					8
+/gate/bar/cubicArray/setRepeatNumberY					1
+/gate/bar/cubicArray/setRepeatNumberZ   				8
+/gate/bar/cubicArray/setRepeatVector 	    			4.8 1. 10.  mm
+/gate/bar/cubicArray/autoCenter 		    			true
+
+# ----------------------------GEOMETRY-----------------------------------------
+
+# Gantry
+/gate/world/daughters/name								Gantry
+/gate/world/daughters/insert         					box
+/gate/Gantry/geometry/setZLength     					10 mm
+/gate/Gantry/geometry/setYLength     					10 mm
+/gate/Gantry/geometry/setXLength     					10 mm
+/gate/Gantry/placement/setTranslation  				    175 0 0 mm
+/gate/Gantry/setMaterial             					Air
+/gate/Gantry/vis/setVisible          					1
+/gate/Gantry/vis/setColor            					yellow
+
+#=====================================================
+# PHYSICS
+#=====================================================
+
+/gate/physics/addPhysicsList emstandard_opt1
+/gate/physics/addPhysicsList QGSP_BIC_EMY
+
+/gate/physics/Gamma/SetCutInRegion						world 10 mm
+/gate/physics/Electron/SetCutInRegion   				world 10 mm
+/gate/physics/Positron/SetCutInRegion					world 10 mm
+/gate/physics/Proton/SetCutInRegion						world 10 mm
+
+/gate/physics/Gamma/SetCutInRegion						bar 10 mm
+/gate/physics/Electron/SetCutInRegion   				bar 10 mm
+/gate/physics/Positron/SetCutInRegion   				bar 10 mm
+/gate/physics/Proton/SetCutInRegion						bar 10 mm
+
+# /gate/physics/SetMinRemainingRangeInRegion world 10 mm
+# /gate/physics/ActivateSpecialCuts e-
+
+/gate/physics/displayCuts
+
+#=====================================================
+# INITIALISATION
+#=====================================================
+
+
+# Attaching geometries to sensitive detectors
+/gate/systems/CTscanner/module/attach					module
+/gate/systems/CTscanner/cluster_0/attach				cluster
+/gate/systems/CTscanner/pixel_0/attach					bar
+
+/gate/bar/attachCrystalSD
+
+/gate/output/ascii/enable
+/gate/output/ascii/reset
+/gate/output/ascii/setFileName output/grant
+
+/gate/run/initialize
+#=====================================================
+# BEAM
+#=====================================================
+
+/gate/source/addSource mybeam gps
+/gate/source/mybeam/attachTo							Gantry
+/gate/source/mybeam/gps/particle       					gamma
+/gate/source/mybeam/gps/ene/mono      					147.7 MeV
+/gate/source/mybeam/gps/ene/type       					Gauss
+/gate/source/mybeam/gps/ene/sigma     					0.8 MeV
+/gate/source/mybeam/gps/pos/halfx      					5 mm
+/gate/source/mybeam/gps/pos/halfy      					5 mm
+/gate/source/mybeam/gps/pos/centre     					-5 0 0 mm
+/gate/source/mybeam/gps/pos/rot1       					0 1 0
+/gate/source/mybeam/gps/pos/rot2       					0 0 1
+/gate/source/mybeam/gps/pos/type       					Beam
+/gate/source/mybeam/gps/pos/shape      					Rectangle
+/gate/source/mybeam/gps/direction      					-1 0 0
+#/gate/source/mybeam/gps/ang/type       					focused
+#/gate/source/mybeam/gps/ang/rot1       					0 1 0
+#/gate/source/mybeam/gps/ang/rot2       					0 0 1
+#/gate/source/mybeam/gps/ang/focuspoint 					-15 0 0 mm
+
+# The pos/type Beam eliminates the need
+# for angular specifications since
+# it defaults to shooting the beam perfectly
+# perpendicular to the emitting surface
+
+#=====================================================
+# MAIN
+#=====================================================
+
+# DEBUG
+#/tracking/verbose 1
+#/tracking/verbose 1
+
+/gate/application/setTimeSlice							1		s
+/gate/application/setTimeStart							0.		s
+/gate/application/setTimeStop							1.		s
+
+/gate/random/setEngineName MersenneTwister
+/gate/random/setEngineSeed auto
+
+/gate/application/setTotalNumberOfPrimaries				100
+/gate/application/start
