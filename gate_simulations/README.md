@@ -5,8 +5,26 @@ I may put them in the same file and comment out sections that change but I think
 ## Structure
 - Put each simulation in its own root directory identified with its name if its modeling bars or cubes. 
     - There shouldn't be a need for version numbers since we are using git!!!
-    
-    
+
+## Detector Rotation
+The first time this project was started the detector remained fixed and the incoming beam did not travel skew to the faces. This time the beam sizes change like normal but the detector rotates with steps of $20^{\circ}$. This process is exhaustive of permutations so every beam size will get every degree of rotation.
+
+<figure>
+    <center>
+        <img src='../supplimentary_material/beam_head_on._0000.png' width='800'>
+        <figcaption> This picture is the beam head on to the detector with $0^{\circ}$ of rotation </figcaption>
+    </center>
+</figure>
+
+<figure>
+    <center>
+        <img src='../supplimentary_material/beam_40deg._0000.png' width='800'>
+        <figcaption> This picture is of the beam penetrating the detector which has been rotated $40^{\circ}$ </figcaption>
+    </center>
+</figure>
+
+
+        
 ## Configuration
 ```
 [G4] 

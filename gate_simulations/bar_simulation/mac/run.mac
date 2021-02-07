@@ -21,7 +21,7 @@
 /gate/world/geometry/setXLength							1000 mm
 /gate/world/geometry/setYLength							1000 mm
 /gate/world/geometry/setZLength    						1000 mm
-/gate/world/vis/setVisible                              1
+/gate/world/vis/setVisible                              0
 
 # ----------------------------GEOMETRY-----------------------------------------
 
@@ -57,7 +57,7 @@
 /gate/cluster/geometry/setXLength       				280 mm
 #/gate/cluster/placement/setTranslation  				-540 0 0 mm
 /gate/cluster/placement/setRotationAxis         0 1 0
-/gate/cluster/placement/setRotationAngle 20 deg
+/gate/cluster/placement/setRotationAngle 40 deg
 
 /gate/cluster/setMaterial               				Air
 /gate/cluster/vis/setVisible            				0
@@ -184,5 +184,5 @@
 /gate/random/setEngineName MersenneTwister
 /gate/random/setEngineSeed auto
 
-/gate/application/setTotalNumberOfPrimaries				100
+/gate/application/setTotalNumberOfPrimaries				10
 /gate/application/start
