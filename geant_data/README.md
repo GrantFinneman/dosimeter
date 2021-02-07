@@ -1,8 +1,11 @@
 # Naming of generated files
 
 ## *NOTE*
-- The directory that is going to be used is dosimeterDataMM_completed_11_11_2019
+- Upon the discovery that ALL of the Geant data was wrong (see the figures in the figures directory), all of the geant data was deleted due to being cluttering. This allowes this direcotry to be renamed to reflect the useable data contained within, the Gate data
 
+
+***
+- All of this is obsolete now
 ## Geant Bars
 The name of each file totEDBars\_#\_#.txt signifies the shape of the beam hitting the detector. The beam is a rectangle centered on the detector with a length and width defined by the first and second numbers respectively. The second number gives the thickness of the beam which is shows up as more pixels being activated on the detector. It gets wider
 ![title](../supplimentary_material/proof_of_geant_beam_width.png)

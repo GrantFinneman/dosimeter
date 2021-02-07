@@ -3,7 +3,7 @@ Here is where the simulations will live and be developed, Ultimately I will need
 I may put them in the same file and comment out sections that change but I think it would be better to completely write separate one and use the same material files and stuff. Just the .mac file will change.
 
 ## Structure
-- Put each simulation in its own roo directory identified with its name if its modeling bars or cubes. 
+- Put each simulation in its own root directory identified with its name if its modeling bars or cubes. 
     - There shouldn't be a need for version numbers since we are using git!!!
     
     
