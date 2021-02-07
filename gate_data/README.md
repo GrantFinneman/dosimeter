@@ -2,7 +2,12 @@
 
 ## *NOTE*
 - Upon the discovery that ALL of the Geant data was wrong (see the figures in the figures directory), all of the geant data was deleted due to being cluttering. This allowes this direcotry to be renamed to reflect the useable data contained within, the Gate data
+The filenames of the extracted data and the generatted data are exactly the same except the extracted files have an `extracted` on the end.
 
+
+## Example of Un-Extracted Gate Output
+This stuff will extend for about $12$ million lines to a size of $250$ Mb. I formatted it using tabulate in python just so you could see what is happening. The text editor in the picture is Vim.
+![Formatted output from simulation](../supplimentary_material/raw_gate_output.png)
 
 ***
 - All of this is obsolete now
