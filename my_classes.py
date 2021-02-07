@@ -225,9 +225,27 @@ def bar_chart_helper_rot(bar_heights):
 
 #=========================================================================
 
-def load_gate_data_by_angle(extracted_dir = '/home/gmf/Projects/dosimeter/geant_data/extracted_data/grant_gate/'):
+def load_gate_data_by_angle(cubes=False, bars=True):
     '''Function that will parse all of the extracted run names and generate a dictionary of all of the run width and height combinations. This
-    will allow me to plug in a width and height that I want and get all of the angles of with the beam of that size'''
+    will allow me to plug in a width and height that I want and get all of the angles of with the beam of that size. The default data it loads is from the bars so specify the location of the cube data if you want that instead.
+    
+    
+    Params
+    ------
+    cubes : [bool] Set this to true if you want all of the cube data loaded. Defaults to False.
+    
+    bars : [bool] Set this to true if you want the bar data loaded. Defults to True
+    '''
+    if all((cubes, bars)):
+        raise Exception('Both cubes and bars are True. Only one can be at a time.')
+        
+    if all((cubes==False, bars==False)):
+        raise Exception('Both cubes and bars are False, the computer is confused about what you want.')
+    
+    if bars:
+        extracted_dir = 'gate_data/bars/'
+    elif cubes:
+        extracted_dir = 'gate_data/cubes'
     
     
     # Generating the large list of all the paths

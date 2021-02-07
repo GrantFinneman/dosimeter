@@ -1,14 +1,13 @@
 # Dosimeter
 Repo for the 2018 dosimeter project
-
 ***
+
 ## General Information
 A Detector was developed with scintilating plastic. A collection of 64 bars on the end of a 64 channel SiPM. Each bar is about 8mm long, 5mm wide, 2.5mm thick.
 
 
 ## Data Collected in Ohio
 The data collected in ohio by Alex is in the directory ohio_data/runs. The detector was rotated for each run which is denoted by \_r in the filename. The data files given by the photoniq software is pretty cluttered so the extracted data is stored in ohio_data/extracted with the same naming scheme as before.
-
 
 ## Gate Data
 - Renamed to gate_data since the geant data was all bad and was just deleted, was called geant_data
@@ -24,7 +23,7 @@ This is the directory that is going to contain any picture referenced in any not
 # Notebooks
 ***
 ## data_procesing.ipynb
-The notebook used to extract the data from the original photoniq files is named data_processing.ipynb
+The notebook used to extract the data from the original photoniq files is named data_processing.ipynb. This notebook also has all of the data extraction and processing code used on the Gate output. Each section is labeled with a header markdown cell so you can't get lost.
 
 ## plotting.ipynb
 The notebook that will be responsible for creating all of the plots of the energy deposition
