@@ -16,6 +16,7 @@ This is where all of the extracted runs of the simulation are held. The file nam
 
 ## Gate Simulations
 Here is where I will be creating the new geant4 simulations with the opengate collaboration wrapper. The geant runs from luke and them are all wrong. The Issue was the script we used to manipulate the simulation's start and end.
+- The water equivilancy simulations also live here, their plots will be put into the figures directory.
 
 ## Supplimentary Material
 This is the directory that is going to contain any picture referenced in any notebook in the repository. With locations possibly changing places and images getting overwitten, put all pictures you want to place in a notebook in here so they never get changed by accident.
