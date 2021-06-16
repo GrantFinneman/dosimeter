@@ -72,7 +72,7 @@
 /gate/cube/geometry/setYLength							10 mm
 /gate/cube/geometry/setZLength							10 mm
 #/gate/cube/setMaterial									Air
-/gate/cube/setMaterial									hd_scint_glass_Eu
+/gate/cube/setMaterial									ScintX
 /gate/cube/vis/setColor									red
 
 
@@ -184,5 +184,5 @@
 /gate/random/setEngineName MersenneTwister
 /gate/random/setEngineSeed auto
 
-/gate/application/setTotalNumberOfPrimaries				100000
+/gate/application/setTotalNumberOfPrimaries				10000
 /gate/application/start
