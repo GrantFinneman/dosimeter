@@ -126,5 +126,5 @@
 #/tracking/verbose 1
 
 /gate/application/noGlobalOutput
-/gate/application/setTotalNumberOfPrimaries 10000000
+/gate/application/setTotalNumberOfPrimaries 1000000
 /gate/application/start
