@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import pandas as pd
+from glob import glob
 
 #=========================================================================
 def create_3d_cords():
@@ -227,7 +228,8 @@ def bar_chart_helper_rot(bar_heights):
 
 def load_gate_data_by_angle(cubes=False, bars=True):
     '''Function that will parse all of the extracted run names and generate a dictionary of all of the run width and height combinations. This
-    will allow me to plug in a width and height that I want and get all of the angles of with the beam of that size. The default data it loads is from the bars so specify the location of the cube data if you want that instead.
+    will allow me to plug in a width and height that I want and get all of the angles of with the beam of that size.
+    The default data it loads is from the bars so specify the location of the cube data if you want that instead.
     
     
     Params
@@ -243,14 +245,16 @@ def load_gate_data_by_angle(cubes=False, bars=True):
         raise Exception('Both cubes and bars are False, the computer is confused about what you want.')
     
     if bars:
-        extracted_dir = 'gate_data/bars/'
+        extracted_dir = 'gate_data/bars'
     elif cubes:
         extracted_dir = 'gate_data/cubes'
     
-    
+    # paths = sorted(glob(f'{extracted_dir}/*.txt'))
     # Generating the large list of all the paths
     paths = sorted([os.path.join(extracted_dir, file) for file in os.listdir(extracted_dir)
                if file.endswith('.txt')])
+
+    paths = sorted(glob(f'{extracted_dir}/*.txt'))
 
     # Generates a dictionary seperating out the files based on beam size
     size_dict = {}
@@ -261,7 +265,7 @@ def load_gate_data_by_angle(cubes=False, bars=True):
             angle_list = [path for path in paths 
                          if all((f'W{w_pattern}' in path, f'H{h_pattern}' in path))]
             size_dict[f'W{w_pattern}_H{h_pattern}'] = angle_list
-            
+
     # Generates a dictionary that will contain a dictionary mapping the angle to the edep
     size_energy_dict = {}
     for beam_size, file_list in size_dict.items():
