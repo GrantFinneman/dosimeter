@@ -56,8 +56,8 @@
 /gate/cluster/geometry/setYLength       				280 mm
 /gate/cluster/geometry/setXLength       				280 mm
 #/gate/cluster/placement/setTranslation  				-540 0 0 mm
-/gate/cluster/placement/setRotationAxis         0 1 0
-/gate/cluster/placement/setRotationAngle 350 deg
+/gate/cluster/placement/setRotationAxis         1 0 0
+/gate/cluster/placement/setRotationAngle 345 deg
 
 /gate/cluster/setMaterial               				Air
 /gate/cluster/vis/setVisible            				0
@@ -72,7 +72,7 @@
 /gate/bar/geometry/setYLength							80 mm
 /gate/bar/geometry/setZLength							10 mm
 #/gate/bar/setMaterial									Air
-/gate/bar/setMaterial									hd_scint_glass_Eu
+/gate/bar/setMaterial									ScintX
 /gate/bar/vis/setColor									red
 
 
@@ -136,7 +136,7 @@
 /gate/output/ascii/setOutFileHitsFlag            1
 /gate/output/ascii/setOutFileSinglesFlag         0
 
-/gate/output/ascii/setFileName output/W50__H50__A350_bars_
+/gate/output/ascii/setFileName output/E10__W50__H50__A345_bars_
 
 /gate/run/initialize
 #=====================================================
@@ -146,7 +146,7 @@
 /gate/source/addSource mybeam gps
 /gate/source/mybeam/attachTo							Gantry
 /gate/source/mybeam/gps/particle       					gamma
-/gate/source/mybeam/gps/ene/mono      					147.7 MeV
+/gate/source/mybeam/gps/ene/mono 10 MeV
 /gate/source/mybeam/gps/ene/type       					Gauss
 /gate/source/mybeam/gps/ene/sigma     					0.8 MeV
 /gate/source/mybeam/gps/pos/halfx 25.00 mm

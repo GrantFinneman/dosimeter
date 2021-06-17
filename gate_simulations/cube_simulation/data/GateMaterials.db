@@ -451,3 +451,28 @@ hd_scint_glass_Eu: d=5.9 g/cm3 ; n=4
         +mat: name= B2O3 ; f= .198
         +mat: name= Eu2O3 ; f= .01
 
+Ptp: d=1.24 g/cm3;   n=2
+        +el: name=Carbon;    n=18
+        +el: name=Hydrogen;  n=14
+        
+BisMSB: d=1.06 g/cm3;       n=2
+        +el: name=Carbon;   n=24
+        +el: name=Hydrogen; n=22
+
+Peroxide: d=1.56 g/cm3;     n=3
+        +el: name=Carbon;   n=18
+        +el: name=Hydrogen; n=22
+        +el: name=Oxygen;   n=2
+
+HardsillCC: d=0.95 g/cm3;    n=4
+        +el: name=Silicon;   n=2
+        +el: name=Hydrogen;  n=10
+        +el: name=Oxygen;    n=3
+        +el: name=Carbon;    n=12
+
+ScintX: d=0.96 g/cm3;          n=4
+        +mat: name=Ptp        ;   f= 0.009814
+        +mat: name=BisMSB     ;   f= 0.0009814
+        +mat: name=Peroxide   ;   f= 0.007851
+        +mat: name=HardsillCC ;   f= 0.9814
+
