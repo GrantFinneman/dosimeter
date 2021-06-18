@@ -1,8 +1,8 @@
 text.color : (0.2,0.2,0.2)
 
 # AXES
-axes.titlesize : 16
-axes.labelsize : 14
+#axes.titlesize : 16
+#axes.labelsize : 9
 axes.edgecolor : (0.1,0.1,0.1) #Normalized RGB colours (from 0 to 1 instead of 0 to 255)
 axes.labelcolor : (0.1,0.1,0.1)
 axes.linewidth : 1
@@ -15,7 +15,7 @@ axes.spines.left : True
 axes.grid : True
 grid.alpha : 0.7
 grid.linestyle : --
-grid.linewidth : 0.6
+grid.linewidth : 0.8
 
 # LINES
 #axes.prop_cycle : cycler('color', [ '0046b8', '2464c9', '4d87e3', '7899cf', '8ea1bf']) #hex colours
