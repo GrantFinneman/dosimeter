@@ -1,4 +1,4 @@
-This file was gnenerated on 2021-06-17 20:59:01.913586 by Grant Finneman. This contains the extracted data from the Gate simulations
+This file was gnenerated on 2021-06-21 16:26:00.880223 by Grant Finneman. This contains the extracted data from the Gate simulations
 The edep for each bar was summed up and printed to this file. The only math operation done has been addition.
 
   id      edep
@@ -6,7 +6,10 @@ The edep for each bar was summed up and printed to this file. The only math oper
    1    0.9923
    2   24.3953
    3    1.4225
+   4    0
    5    4.0072
+   6    0
+   7    0
    8  147.83
    9  137.07
   10  140.749
@@ -59,6 +62,7 @@ The edep for each bar was summed up and printed to this file. The only math oper
   57    0.4483
   58    0.5734
   59    0.6968
+  60    0
   61    9.4422
   62    0.576
   63    0.0915

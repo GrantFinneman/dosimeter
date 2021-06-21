@@ -1,24 +1,47 @@
-This file was gnenerated on 2021-06-17 21:29:13.389818 by Grant Finneman. This contains the extracted data from the Gate simulations
+This file was gnenerated on 2021-06-21 16:55:13.341233 by Grant Finneman. This contains the extracted data from the Gate simulations
 The edep for each bar was summed up and printed to this file. The only math operation done has been addition.
 
   id      edep
+   0    0
+   1    0
+   2    0
+   3    0
+   4    0
    5    0.9152
+   6    0
+   7    0
+   8    0
+   9    0
+  10    0
+  11    0
+  12    0
   13    0.6356
+  14    0
+  15    0
   16   10.0892
   17    0.642
+  18    0
+  19    0
   20   22.9944
+  21    0
+  22    0
   23    0.9836
   24   20.7624
   25   37.6841
   26   32.0879
+  27    0
   28   22.0312
   29    0.7009
+  30    0
+  31    0
   32   32.8709
   33    9.5557
   34   14.0044
   35   11.8465
   36   23.8873
   37   16.2241
+  38    0
+  39    0
   40   11.3917
   41   14.873
   42    0.7993
@@ -26,12 +49,31 @@ The edep for each bar was summed up and printed to this file. The only math oper
   44   21.3106
   45    2.6874
   46    1.392
+  47    0
+  48    0
   49   35.8171
+  50    0
   51    1.1053
+  52    0
+  53    0
+  54    0
+  55    0
+  56    0
+  57    0
+  58    0
   59    5.52
+  60    0
+  61    0
+  62    0
+  63    0
   64   25.5267
   65    4.5105
+  66    0
+  67    0
+  68    0
   69    0.8338
+  70    0
+  71    0
   72   34.2363
   73   16.6061
   74   31.763
@@ -39,6 +81,7 @@ The edep for each bar was summed up and printed to this file. The only math oper
   76   19.7625
   77    8.1242
   78    0.219
+  79    0
   80   24.2424
   81   50.3103
   82   32.6874
@@ -76,14 +119,25 @@ The edep for each bar was summed up and printed to this file. The only math oper
  114    7.1824
  115    6.7104
  116   10.9216
+ 117    0
  118   19.2984
+ 119    0
+ 120    0
+ 121    0
+ 122    0
  123    1.9221
  124    0.1235
+ 125    0
+ 126    0
+ 127    0
  128   28.2246
  129   30.341
  130    4.9614
  131    0.895
  132   11.3372
+ 133    0
+ 134    0
+ 135    0
  136  113.085
  137  163.689
  138   81.5288
@@ -131,10 +185,23 @@ The edep for each bar was summed up and printed to this file. The only math oper
  180   39.2418
  181    2.3835
  182    0.0685
+ 183    0
+ 184    0
+ 185    0
+ 186    0
+ 187    0
  188    0.11
+ 189    0
+ 190    0
+ 191    0
  192   25.8653
  193   38.63
+ 194    0
  195    0.7792
+ 196    0
+ 197    0
+ 198    0
+ 199    0
  200  153.667
  201  134.131
  202   87.0542
@@ -187,11 +254,18 @@ The edep for each bar was summed up and printed to this file. The only math oper
  249   30.0733
  250    1.4433
  251   24.033
+ 252    0
+ 253    0
+ 254    0
+ 255    0
+ 256    0
  257   19.8339
  258    0.11
+ 259    0
  260    1.2908
  261    6.1984
  262   12.3968
+ 263    0
  264  107.537
  265   91.6958
  266   87.3553
@@ -244,10 +318,18 @@ The edep for each bar was summed up and printed to this file. The only math oper
  313   18.0146
  314    8.1009
  315    2.1408
+ 316    0
+ 317    0
  318    0.8796
  319    0.7895
+ 320    0
  321    3.6246
  322   14.4984
+ 323    0
+ 324    0
+ 325    0
+ 326    0
+ 327    0
  328   35.6891
  329   14.8351
  330   62.3078
@@ -302,7 +384,16 @@ The edep for each bar was summed up and printed to this file. The only math oper
  379   20.2302
  380    4.3176
  381    1.897
+ 382    0
+ 383    0
+ 384    0
+ 385    0
+ 386    0
+ 387    0
  388   13.6496
+ 389    0
+ 390    0
+ 391    0
  392   40.6061
  393   22.2901
  394    7.9794
@@ -310,6 +401,7 @@ The edep for each bar was summed up and printed to this file. The only math oper
  396   12.6591
  397   28.4282
  398   30.9488
+ 399    0
  400   79.0946
  401   70.5789
  402   50.2012
@@ -332,6 +424,7 @@ The edep for each bar was summed up and printed to this file. The only math oper
  419   42.1481
  420   34.0063
  421   21.5323
+ 422    0
  423    4.3411
  424   69.2135
  425   47.4039
@@ -347,14 +440,31 @@ The edep for each bar was summed up and printed to this file. The only math oper
  435   13.784
  436    4.8462
  437    0.072
+ 438    0
+ 439    0
  440   12.3799
  441    0.7116
  442   14.974
+ 443    0
+ 444    0
+ 445    0
+ 446    0
+ 447    0
+ 448    0
+ 449    0
+ 450    0
+ 451    0
+ 452    0
+ 453    0
+ 454    0
+ 455    0
  456   13.1829
  457    5.6053
  458    3
  459    5.2878
  460   17.4328
+ 461    0
+ 462    0
  463    0.9432
  464   17.222
  465   17.513
@@ -363,12 +473,44 @@ The edep for each bar was summed up and printed to this file. The only math oper
  468    3.752
  469   12.345
  470    9.3822
+ 471    0
+ 472    0
+ 473    0
  474   17.9907
  475   20.2504
  476    0.5086
  477    0.4681
+ 478    0
+ 479    0
+ 480    0
+ 481    0
  482    0.7046
+ 483    0
+ 484    0
+ 485    0
  486    0.8203
+ 487    0
  488   20.5551
+ 489    0
+ 490    0
  491    0.4142
+ 492    0
+ 493    0
+ 494    0
+ 495    0
+ 496    0
+ 497    0
+ 498    0
  499    0.7851
+ 500    0
+ 501    0
+ 502    0
+ 503    0
+ 504    0
+ 505    0
+ 506    0
+ 507    0
+ 508    0
+ 509    0
+ 510    0
+ 511    0
