@@ -1,7 +1,8 @@
-Normalized input Data, NOT target data!!!
+normalization on inputs
 
 m = Chain(Conv((2,2), 2=>16, pad=(1,1), relu),
         x -> reshape(x, :, size(x,4)), 
 
-        Dense(1296, 8*8*8),
+        Dense(1296, 850),
+        Dense(850, 8*8*8),
         x -> abs.(x))

@@ -1,0 +1,5 @@
+target normalization for inputs
+
+m = Chain(Dense(128, 350),
+        Dense(350, 8*8*8),
+        x -> abs.(x))

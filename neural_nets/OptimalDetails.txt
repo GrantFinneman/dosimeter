@@ -1,0 +1,30 @@
+Optimal Convolutional Neural Network:
+
+    Conv((2,2), 2=>16, pad=(1,1), relu),
+
+    OR
+    
+    Conv((2,2), 2=>8, pad=(1,1), relu),
+    Conv((2,2), 8=>16, pad=(1,1), relu),
+   
+   
+Optimal Dense Layers:
+
+    One/Two dense algorithms with middle layer not below last.
+    
+    Dense(1296, 850),
+    Dense(850, 8*8*8),
+    
+    Finished with abosolute value changer.
+        x -> abs.(x)
+    
+    
+Optimizers:
+    Adam and RELU:
+    Dataset repeated 15 times.
+    Trained on 15-degree steps.
+    
+    
+Validation:
+    16.6% Of data validation (last 3 rotations from each run)
+    
