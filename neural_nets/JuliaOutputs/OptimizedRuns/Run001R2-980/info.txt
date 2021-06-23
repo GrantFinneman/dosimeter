@@ -1,0 +1,9 @@
+m = Chain(Conv((2,2), 2=>8, pad=(1,1), relu),
+        Conv((2,2), 8=>16, pad=(1,1), relu),
+        x -> reshape(x, :, size(x,4)), 
+
+        Dense(1600, 900),
+        Dense(900, 8*8*8),
+        x -> abs.(x))
+        
+not normalized, adam(), relu
