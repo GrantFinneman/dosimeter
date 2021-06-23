@@ -1,0 +1,10 @@
+Training R2: 0.9358415376511933
+Validation R2: 0.9373754672687626
+
+m = Chain(Conv((2,2), 2=>16, pad=(1,1), relu),
+        x -> maxpool(x, (2,2)),
+        x -> reshape(x, :, size(x,4)),
+
+        Dense(256, 1800),
+
+        Dense(1800, 8*8*8))

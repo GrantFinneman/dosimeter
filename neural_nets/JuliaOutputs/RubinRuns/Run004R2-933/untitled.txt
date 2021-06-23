@@ -1,0 +1,9 @@
+Training R2: 0.8943519176073408
+Validation R2: 0.9325573396336684
+
+m = Chain(Conv((2,2), 2=>24, pad=(1,1), relu),
+        x -> reshape(x, :, size(x,4)), 
+
+        Dense(1944, 1800),
+
+        Dense(1800, 8*8*8))
