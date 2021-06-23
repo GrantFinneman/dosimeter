@@ -23,6 +23,7 @@ Optimizers:
     Adam and RELU:
     Dataset repeated 15 times.
     Trained on 15-degree steps.
+    Dropout(0.05)
     
     
 Validation:
