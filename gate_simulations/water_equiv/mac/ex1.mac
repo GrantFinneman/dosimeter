@@ -20,7 +20,7 @@
 # World
 /gate/world/geometry/setXLength 1 m
 /gate/world/geometry/setYLength 1 m
-/gate/world/geometry/setZLength 1 m
+/gate/world/geometry/setZLength 5 m
 /gate/world/setMaterial Air
 
 
@@ -29,8 +29,8 @@
 /gate/world/daughters/insert            box
 /gate/waterbox/geometry/setXLength      40 cm
 /gate/waterbox/geometry/setYLength      40 cm
-/gate/waterbox/geometry/setZLength      40 cm
-/gate/waterbox/placement/setTranslation 0 0 25 cm
+/gate/waterbox/geometry/setZLength      400 cm
+/gate/waterbox/placement/setTranslation 0 0 0 cm
 /gate/waterbox/setMaterial ScintX
 /gate/waterbox/vis/setVisible 1
 /gate/waterbox/vis/setColor blue
@@ -39,7 +39,29 @@
 # PHYSICS
 #=====================================================
 
-/gate/physics/addPhysicsList emstandard_opt3
+#/gate/physics/addProcess PhotoElectric
+#/gate/physics/processes/PhotoElectric/setModel StandardModel
+
+#/gate/physics/addProcess Compton
+#/gate/physics/processes/Compton/setModel PenelopeModel
+
+#/gate/physics/addProcess RayleighScattering
+#/gate/physics/processes/RayleighScattering/setModel PenelopeModel
+
+#/gate/physics/addProcess ElectronIonisation
+#/gate/physics/processes/ElectronIonisation/setModel StandardModel e-
+
+#/gate/physics/addProcess Bremsstrahlung
+#/gate/physics/processes/Bremsstrahlung/setModel StandardModel e-
+
+#/gate/physics/addProcess MultipleScattering e-
+
+/gate/physics/addPhysicsList emstandard_opt1
+/gate/physics/addPhysicsList QBBC
+
+
+#/gate/physics/processList Enabled
+#/gate/physics/processList Initialized
 
 /gate/physics/Gamma/SetCutInRegion      world 10 mm
 /gate/physics/Electron/SetCutInRegion   world 10 mm
@@ -58,14 +80,15 @@
 
 /gate/actor/addActor                        DoseActor  depthdose
 /gate/actor/depthdose/save output/E10_ScintX_depth_dose.txt
-/gate/actor/depthdose/attachTo    	        waterbox
+/gate/actor/depthdose/attachTo            waterbox
 /gate/actor/depthdose/stepHitType           random
 /gate/actor/depthdose/setPosition           0 0 0 cm
-/gate/actor/depthdose/setResolution         1 1 1000
+/gate/actor/depthdose/setResolution         1 1 200
 /gate/actor/depthdose/saveEveryNSeconds     60
-/gate/actor/depthdose/enableEdep            true
-/gate/actor/depthdose/enableUncertaintyEdep true
-/gate/actor/depthdose/enableDose            false
+/gate/actor/depthdose/enableEdep            false
+/gate/actor/depthdose/enableUncertaintyEdep false
+/gate/actor/depthdose/enableDose            true
+/gate/actor/depthdose/normaliseDoseToMax    true
 /gate/actor/depthdose/enableUncertaintyDose false
 /gate/actor/depthdose/enableNumberOfHits    false
 
@@ -107,12 +130,12 @@
 /gate/source/mybeam/gps/pos/rot1 0 1 0
 /gate/source/mybeam/gps/pos/rot2 1 0 0
 /gate/source/mybeam/gps/pos/shape Circle
-/gate/source/mybeam/gps/pos/centre 0 0 0 mm
-/gate/source/mybeam/gps/pos/sigma_x 3 mm
-/gate/source/mybeam/gps/pos/sigma_y 3 mm
+/gate/source/mybeam/gps/pos/centre 0 0 -210 cm
+/gate/source/mybeam/gps/pos/sigma_x 3 cm
+/gate/source/mybeam/gps/pos/sigma_y 3 cm
 /gate/source/mybeam/gps/ene/mono 10 MeV
 /gate/source/mybeam/gps/ene/type Gauss
-/gate/source/mybeam/gps/ene/sigma 1.0 MeV
+/gate/source/mybeam/gps/ene/sigma 1.0 eV
 /gate/source/mybeam/gps/direction 0 0 1
 
 #=====================================================
@@ -126,5 +149,5 @@
 #/tracking/verbose 1
 
 /gate/application/noGlobalOutput
-/gate/application/setTotalNumberOfPrimaries 10000000
+/gate/application/setTotalNumberOfPrimaries 100000
 /gate/application/start
