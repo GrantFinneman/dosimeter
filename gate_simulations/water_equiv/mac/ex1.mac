@@ -131,8 +131,8 @@
 /gate/source/mybeam/gps/pos/rot2 1 0 0
 /gate/source/mybeam/gps/pos/shape Circle
 /gate/source/mybeam/gps/pos/centre 0 0 -210 cm
-/gate/source/mybeam/gps/pos/sigma_x 3 cm
-/gate/source/mybeam/gps/pos/sigma_y 3 cm
+/gate/source/mybeam/gps/pos/sigma_x 3 mm
+/gate/source/mybeam/gps/pos/sigma_y 3 mm
 /gate/source/mybeam/gps/ene/mono 10 MeV
 /gate/source/mybeam/gps/ene/type Gauss
 /gate/source/mybeam/gps/ene/sigma 1.0 eV
@@ -149,5 +149,5 @@
 #/tracking/verbose 1
 
 /gate/application/noGlobalOutput
-/gate/application/setTotalNumberOfPrimaries 100000
+/gate/application/setTotalNumberOfPrimaries 10000000
 /gate/application/start
